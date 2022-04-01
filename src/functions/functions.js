@@ -1,10 +1,14 @@
+// Don't use global variables
 let count = 0;
 let countArray = [];
 let output;
 
 export function counter(firstValue, secondValue) {
 
+  // TODO: Check if we can use function declaration instead of expression
   let outputCount = function (input1, input2) {
+    // TODO: Move checks into variables
+    // TODO: Seems like we need to check input2 === undefined, and then, based on type of input1 handle next steps 
     if (typeof input1 !== 'string' && input2 === undefined) {
       input1 ? (count = input1) : count;
       return count++;
@@ -16,6 +20,7 @@ export function counter(firstValue, secondValue) {
         return 0;
       }
 
+      // TODO: Check reduce instead
       countArray.forEach((arr) => {
         if (arr.request === input1) {
           output = ++arr.response;
@@ -52,6 +57,9 @@ export function counter(firstValue, secondValue) {
 
 
 export function callableMultiplier(...inputs) {
+  // TODO: Make a reverse check
+  // if (length===0) {return null}
+  // ...
   if (inputs.length > 0) {
     return function (...resultInputs) {
       if (resultInputs.length === 0) {
@@ -75,6 +83,7 @@ export function createCalculator(input) {
 
     this.log = [{ operation: 'init', value: this.initialCount }];
 
+    // Use prototype instead
     this.add = (init) => {
       this.initialCount += init;
       calculate('add', init, this.log);
@@ -99,6 +108,7 @@ export function createCalculator(input) {
   return new Calculator(input);
 }
 
+// Move into feature scope
 const calculate = (operation, init, logEntry) => {
   logEntry.push({ operation: operation, value: init });
 }

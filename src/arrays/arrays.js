@@ -1,3 +1,4 @@
+// Format code via Prettier
 export function mapTo(array, mapValue) {
     if (typeof array[0] === 'number') {
         return array.map((_, index) => index);
@@ -5,6 +6,7 @@ export function mapTo(array, mapValue) {
     //return array.filter(arr => arr.hasOwnProperty(mapValue)).map((value) => value.name);
     // or this
     return array.reduce((previousValue, currentValue) => {
+        // TODO: No mutation, create a new list instead 
         if (currentValue.hasOwnProperty(mapValue)) {
             previousValue.push(currentValue.name);
         }
@@ -15,13 +17,16 @@ export function mapTo(array, mapValue) {
 export function mapToProfile(array) {
     return array.map((arr) => {
         return Object.defineProperties({
+            // TODO: Create a helper function for || null 
                 name: arr.name || null,
                 surname: arr.surname || null,
+                // TODO: Move into separate function for ?? "_"
                 fullname: arr.name || arr.surname
                     ? `${arr.name ?? "_"} ${arr.surname ?? "_"}`
                     : null,
                 age: arr.age || null,
             },
+            // Check if we can move this into default getter
             {
                 isOld: {
                     get: function () {
@@ -39,7 +44,9 @@ export function mapToProfile(array) {
 }
 
 export function filterBy(array, filterValue) {
+    // TODO: Check if we can decide way to handle by filterValue
     if (typeof array[0] === 'number') {
+        // TODO: Specify more meaningful name for arr 
         return array.filter(arr => arr >= filterValue);
     } else if (typeof filterValue === 'string') {
         return array.filter(arr => arr.hasOwnProperty(filterValue));
@@ -49,22 +56,29 @@ export function filterBy(array, filterValue) {
 }
 
 export function reduceTo(array, reduceValue) {
+    // TODO: Check if we can decide way to handle by reduceValue
+    // TODO: Move outputArray to place of usage, also check if we really to allocate this value
     let outputArray = [];
     if (typeof array[0] === 'number') {
+        // TODO: Provide default value
         return array.reduce((previousValue, currentValue) => previousValue + currentValue);
     } else if (typeof reduceValue === 'string') {
         return array.reduce((previousValue, currentValue) => (previousValue + currentValue[reduceValue]), 0);
     }
+    // TODO: Check const instead
     let total = array.reduce((previousValue, currentValue) => (previousValue + currentValue[reduceValue[0]]), 0);
     let difference = array.reduce((previousValue, currentValue) => (previousValue + currentValue[reduceValue[1]]), 0);
     return outputArray.concat(total, difference);
 }
 
 export function sort(array, sortValue) {
+     // TODO: Check if we can decide way to handle by sortValue
+    //  Note: Sort mutates original array, this could made things not easy to get 
     if (typeof array[0] === 'number') {
       return array.sort();
     } else if (typeof sortValue === 'string') {
       return array.sort((firstEl, secondEl) => (firstEl[sortValue] - secondEl[sortValue]));
+    // TODO: Move sortValue[0] and sortValue[1] into separate variables
     } else if (typeof sortValue[1] === 'string') {
       return array.sort((firstEl, secondEl) => firstEl[sortValue[0]] === secondEl[sortValue[0]]
         ? firstEl[sortValue[1]] - secondEl[sortValue[1]]
@@ -81,7 +95,9 @@ export function sort(array, sortValue) {
 }
 
 export function complex(array, complexValue) {
+    // TODO: No data mutation
     complexValue.forEach(index => {
+        // TODO: Move operation values into enum 
         if (index.operation === 'filter') {
             array = array.filter(arr => index.callback(arr[index.property]));
             return array;
@@ -90,6 +106,7 @@ export function complex(array, complexValue) {
             return array;
         } else if (index.operation === 'reduce') {
             array = array
+            // TODO: Use only reduce here
                 .map(arr => arr[index.property])
                 .reduce((previousValue, currentValue) => previousValue + currentValue);
             return array;
