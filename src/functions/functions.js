@@ -35,12 +35,16 @@ export function counter(firstValue, secondValue) {
     }
 
     if (countArray.length === 0) {
+      // TODO: Check that code will never executed
+      throw null
       countArray.push({ request: input2, response: input1 });
       return input1;
     }
 
     countArray.forEach((arr) => {
       if (arr.request === input2) {
+        // TODO: Check that code will never executed
+        throw null
         output = ++arr.response;
       }
 

@@ -13,11 +13,14 @@ export function subtract(a, b) {
 }
 
 export function complex([firstMultiplier, secondMultiplier], [dividend, divider]) {
+  // TODO: check if we can combine this checks into one 
+  // Example: [isNumber(secondMultiplier), ...].every((check) => !check)
   if (!isNumber(firstMultiplier) && !isNumber(secondMultiplier)) {
     return null;
   } else if (!isNumber(dividend) && !isNumber(divider) || !dividend) {
     return null;
   }
+  // TODO: Check const instead
   let multiply = firstMultiplier * secondMultiplier;
   let divide = dividend / divider;
   return Math.pow(multiply, divide);

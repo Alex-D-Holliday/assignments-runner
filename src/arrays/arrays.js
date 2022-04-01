@@ -89,6 +89,9 @@ export function sort(array, sortValue) {
                 return firstEl[sortValue[0]] === secondEl[sortValue[0]]
                     ? secondEl[sortValue[1].field] - firstEl[sortValue[1].field]
                     : firstEl[sortValue[0]] - secondEl[sortValue[0]];
+            } else {
+                // TODO: Check that code will never executed
+               throw null
             }
         });
     }
