@@ -4,7 +4,7 @@ export const counter = (function () {
   let output;
 
   return function (input1, input2) {
-    if (input2 === undefined) {
+    if (!input2) {
       if (typeof input1 !== 'string') {
         input1 ? (count = input1) : count;
         return count++;
